@@ -1,0 +1,19 @@
+GET http://localhost:5062/inventory
+
+###
+
+GET http://localhost:5062/inventory/1
+
+###
+
+POST http://localhost:5062/inventory
+Content-Type: application/json
+
+{
+    "name": "Banana",
+    "type": "Fruit",
+    "quantity": 30,
+    "price": 25.50,
+    "expirationDate": "2026-06-10",
+    "lastOrdered": "2026-06-01"
+}
