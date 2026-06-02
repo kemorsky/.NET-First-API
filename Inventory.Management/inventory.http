@@ -1,8 +1,19 @@
 GET http://localhost:5062/inventory
+Accept: application/json
+
+###
+
+GET http://localhost:5062/api/inventory
+Accept: application/json
 
 ###
 
 GET http://localhost:5062/inventory/1
+
+###
+
+GET http://localhost:5062/api/inventory/1
+Accept: application/json
 
 ###
 
