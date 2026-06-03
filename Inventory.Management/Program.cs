@@ -1,12 +1,20 @@
+using Inventory.Management.Data;
 using Inventory.Management.Dtos;
 using Inventory.Management.Services;
 using Microsoft.AspNetCore.Components.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var connectionString = builder.Configuration["CONNECTION_STRING"];
 
 builder.Services.AddControllers();
 
 builder.Services.AddOpenApi();
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+
+    options.UseNpgsql(connectionString: connectionString));
 
 builder.Services.AddScoped<IInventoryItemService, InventoryItemService>();
 
@@ -57,7 +65,11 @@ app.MapGet("/", () => "Hello World!");
 //     // return Results.Created($"/inventory/{item.Id}", item);
 // });
 
+app.UseCors("AllowAll");
+
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

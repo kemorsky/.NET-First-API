@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\kamil\\.NET-First-API\\Inventory.Management\\Inventory.Management.csproj": {}
+    "C:\\Users\\kamil\\.NET-First-API\\Inventory.Management\\Inventory.Management.csproj": {}
   },
   "projects": {
-    "c:\\Users\\kamil\\.NET-First-API\\Inventory.Management\\Inventory.Management.csproj": {
+    "C:\\Users\\kamil\\.NET-First-API\\Inventory.Management\\Inventory.Management.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\kamil\\.NET-First-API\\Inventory.Management\\Inventory.Management.csproj",
+        "projectUniqueName": "C:\\Users\\kamil\\.NET-First-API\\Inventory.Management\\Inventory.Management.csproj",
         "projectName": "Inventory.Management",
-        "projectPath": "c:\\Users\\kamil\\.NET-First-API\\Inventory.Management\\Inventory.Management.csproj",
+        "projectPath": "C:\\Users\\kamil\\.NET-First-API\\Inventory.Management\\Inventory.Management.csproj",
         "packagesPath": "C:\\Users\\kamil\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\kamil\\.NET-First-API\\Inventory.Management\\obj\\",
+        "outputPath": "C:\\Users\\kamil\\.NET-First-API\\Inventory.Management\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\kamil\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -47,6 +47,20 @@
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[10.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[10.0.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[10.0.8, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[10.0.2, )"
             }
           },
           "imports": [
