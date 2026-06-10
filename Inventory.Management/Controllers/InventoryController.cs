@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Inventory.Management.Models;
 using Microsoft.AspNetCore.Authorization;
 using Inventory.Management.Services;
+using Inventory.Management.Dtos;
 
 namespace Inventory.Management.Controllers
 {
@@ -12,11 +13,11 @@ namespace Inventory.Management.Controllers
     public class InventoryController(IInventoryItemService service) : ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<List<InventoryItem>>> GetInventoryItem() 
+        public async Task<ActionResult<List<InventoryItemResponse>>> GetInventoryItem() 
             => Ok(await service.GetAllInventoryItemsAsync());
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetInventoryItem(int id)
+        public async Task<ActionResult<InventoryItemResponse>> GetInventoryItem(int id)
         {
             var item = await service.GetItemById(id);
             
