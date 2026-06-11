@@ -28,6 +28,26 @@ namespace Inventory.Management.Controllers
 
             return Ok(item);
         }
-            
+
+        [HttpPost]
+        public async Task<ActionResult<InventoryItemResponse>> AddInventoryItem(CreateInventoryItemRequest item)
+        {
+            var createdItem = await service.AddItemAsync(item);
+            return CreatedAtAction(nameof(GetInventoryItem), new { id = createdItem.Id }, createdItem);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateInventoryItem(int id, UpdateInventoryItemRequest item)
+        {
+            var updatedItem = await service.UpdateItemAsync(id, item);
+            return updatedItem ? NoContent() : NotFound("Item with the given id was not found");
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteInventoryItem(int id)
+        {
+            var deletedItem = await service.DeleteItemAsync(id);
+            return deletedItem ? NoContent() : NotFound("Item with the given id was not found");
+        }
     }
 };

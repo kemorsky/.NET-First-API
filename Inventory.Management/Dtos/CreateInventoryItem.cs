@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Inventory.Management.Models
+namespace Inventory.Management.Dtos;
+
+public class CreateInventoryItemRequest
 {
-    public class InventoryItem
-    {
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Product name must be specified")]
@@ -19,5 +19,4 @@ namespace Inventory.Management.Models
         public DateOnly ExpirationDate { get; set; }
         
         public DateOnly LastOrdered { get; set; }
-    }
 };

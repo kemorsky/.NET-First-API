@@ -17,6 +17,7 @@ public class InventoryItemService(AppDbContext context) : IInventoryItemService
     public async Task<List<InventoryItemResponse>> GetAllInventoryItemsAsync()
         => await context.Items.Select(c => new InventoryItemResponse
         {
+            Id = c.Id,
             Name = c.Name,
             Type = c.Type,
             Quantity = c.Quantity,
@@ -31,6 +32,7 @@ public class InventoryItemService(AppDbContext context) : IInventoryItemService
             .Where(c => c.Id == id)
             .Select(c => new InventoryItemResponse
             {
+                Id = c.Id,
                 Name = c.Name,
                 Type = c.Type,
                 Quantity = c.Quantity,
@@ -44,18 +46,60 @@ public class InventoryItemService(AppDbContext context) : IInventoryItemService
     }
 
 
-    public Task<InventoryItemResponse> AddItemAsync(InventoryItem item)
+    public async Task<InventoryItemResponse> AddItemAsync(CreateInventoryItemRequest item)
     {
-        throw new NotImplementedException();
+        var newItem = new InventoryItem
+        {
+            Name = item.Name,
+            Type = item.Type,
+            Quantity = item.Quantity,
+            Price = item.Price,
+            ExpirationDate = item.ExpirationDate,
+            LastOrdered = item.LastOrdered
+        };
+        
+        context.Items.Add(newItem);
+        await context.SaveChangesAsync();
+
+        return new InventoryItemResponse
+        {
+            Id = newItem.Id,
+            Name = newItem.Name,
+            Type = newItem.Type,
+            Quantity = newItem.Quantity,
+            Price = newItem.Price,
+            ExpirationDate = newItem.ExpirationDate,
+            LastOrdered = newItem.LastOrdered
+        };
     }
 
-    public Task<bool> UpdateItemAsync(int id, InventoryItem item)
+    public async Task<bool> UpdateItemAsync(int id, UpdateInventoryItemRequest item)
     {
-        throw new NotImplementedException();
+        var existingItem = await context.Items.FindAsync(id);
+
+        if (existingItem is null) return false;
+
+        existingItem.Name = item.Name;
+        existingItem.Type = item.Type;
+        existingItem.Quantity = item.Quantity;
+        existingItem.Price = item.Price;
+        existingItem.ExpirationDate = item.ExpirationDate;
+        existingItem.LastOrdered = item.LastOrdered;
+
+        await context.SaveChangesAsync();
+        
+        return true;
     }
 
-    public Task<bool> DeleteItemAsync(int id)
+    public async Task<bool> DeleteItemAsync(int id)
     {
-        throw new NotImplementedException();
+        var itemToDelete = await context.Items.FindAsync(id);
+
+        if (itemToDelete is null) return false;
+
+        context.Items.Remove(itemToDelete);
+        await context.SaveChangesAsync();
+        
+        return true;
     }
 }

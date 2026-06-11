@@ -7,7 +7,7 @@ public interface IInventoryItemService
 {
     Task<List<InventoryItemResponse>> GetAllInventoryItemsAsync();
     Task<InventoryItemResponse?> GetItemById(int id);
-    Task<InventoryItemResponse> AddItemAsync(InventoryItem item);
-    Task<bool> UpdateItemAsync(int id, InventoryItem item);
+    Task<InventoryItemResponse> AddItemAsync(CreateInventoryItemRequest item);
+    Task<bool> UpdateItemAsync(int id, UpdateInventoryItemRequest item);
     Task<bool> DeleteItemAsync(int id);
 };
