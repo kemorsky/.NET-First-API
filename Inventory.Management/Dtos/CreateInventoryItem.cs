@@ -17,6 +17,6 @@ public class CreateInventoryItemRequest
         public decimal Price { get; set; }
 
         public DateOnly ExpirationDate { get; set; }
-        
+
         public DateOnly LastOrdered { get; set; }
 };
