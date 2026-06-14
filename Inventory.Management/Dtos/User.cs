@@ -7,14 +7,3 @@ namespace Inventory.Management.Dtos
         public DateOnly DateCreated { get; set; }
     }
 };
-
-
-public record InventoryDto(
-    int Id,
-    string Name,
-    string Type,
-    int Quantity,
-    decimal Price,
-    DateOnly ExpirationDate,
-    DateOnly LastOrdered
-);

@@ -6,4 +6,6 @@ namespace Inventory.Management.Data;
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
     public DbSet<InventoryItem> Items => Set<InventoryItem>();
+
+    public DbSet<User> Users => Set<User>();
 }

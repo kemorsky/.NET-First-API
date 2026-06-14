@@ -22,15 +22,4 @@ public class InventoryItemResponse
     public DateOnly ExpirationDate { get; set; }
     
     public DateOnly LastOrdered { get; set; }
-}
-
-// public record InventoryDto(
-//     int Id,
-//     string Name,
-//     string Type,
-//     int Quantity,
-//     decimal Price,
-//     DateOnly ExpirationDate,
-//     DateOnly LastOrdered
-// );
-
+};

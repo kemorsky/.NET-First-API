@@ -42,14 +42,16 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:5062/inventory
+GET http://localhost:5062/api/users
+Content-Type: application/json
+
+###
+
+POST http://localhost:5062/api/users
 Content-Type: application/json
 
 {
-    "name": "Banana",
-    "type": "Fruit",
-    "quantity": 30,
-    "price": 25.50,
-    "expirationDate": "2026-06-10",
-    "lastOrdered": "2026-06-01"
+    "username": "Tommy",
+    "email": "Tommy@gmail.com",
+    "signUpDate": "2026-06-14"
 }
