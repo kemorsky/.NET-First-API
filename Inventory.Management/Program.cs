@@ -1,7 +1,7 @@
 using Inventory.Management.Data;
-using Inventory.Management.Dtos;
 using Inventory.Management.Services;
-using Microsoft.AspNetCore.Components.Infrastructure;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,15 +9,54 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration["CONNECTION_STRING"];
 
 builder.Services.AddControllers();
-
 builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-
     options.UseNpgsql(connectionString: connectionString));
 
 builder.Services.AddScoped<IInventoryItemService, InventoryItemService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+
+// Auth builder services
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    // .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme,
+    //      options => builder.Configuration.Bind("JwtSettings", options))
+    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
+        options =>
+        {
+            options.Events.OnRedirectToLogin = context =>
+            {
+                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                return Task.CompletedTask;
+            };
+            options.Events.OnRedirectToAccessDenied = context =>
+            {
+                context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                return Task.CompletedTask;
+            };
+
+            options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+            options.SlidingExpiration = true;
+
+            options.Cookie.HttpOnly = true;
+            options.Cookie.SameSite = SameSiteMode.Lax; // 'None' if frontend and backend are on different domains
+            options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+        });
+
+builder.Services.AddAuthorization();
+
+// CORS builder services
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("FrontendPolicy", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
 
 var app = builder.Build();
 
@@ -26,54 +65,14 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-// const string GetInventoryEndpointName = "GetInventory";
-// const string GetInventoryItemEndpointName = "GetInventoryItem";
-
-// // Ctrl + . will allow us to choose a suitable Dto from the project files
-
-// List<InventoryDto> inventory = [ // M in price tells compiler that it is a decimal
-//     new (1, "Chicken Breast", "Meat", 3, 59.95M, new DateOnly(2026, 6, 02), new DateOnly(2026, 5, 29)),
-//     new (2, "Apple", "Fruit", 7, 20.75M, new DateOnly(2026, 6, 05), new DateOnly(2026, 5, 27)),
-//     new (3, "Milk", "Dairy", 1, 17.85M, new DateOnly(2026, 6, 01), new DateOnly(2026, 5, 27)),
-// ];
-
-app.MapGet("/", () => "Hello World!");
-
-// // GET /inventory - return the entire inventory
-// app.MapGet("/inventory", () => inventory)
-//     .WithName(GetInventoryEndpointName);;
-
-// // GET /inventory/1 - return the first item in the inventory
-// app.MapGet("/inventory/{id}", (int id) => inventory.Find(inventory => inventory.Id == id))
-//     .WithName(GetInventoryItemEndpointName); // .WithName allows for naming endpoints for easier implementation in later stages
-
-// // POST /inventory - return the first item in the inventory
-// app.MapPost("/inventory", (CreateInventoryItemDto newItem) =>
-// {
-//     InventoryDto item = new(
-//         inventory.Count + 1,
-//         newItem.Name,
-//         newItem.Type,
-//         newItem.Quantity,
-//         newItem.Price,
-//         newItem.ExpirationDate,
-//         newItem.LastOrdered
-//     );
-
-//     inventory.Add(item);
-
-//     return Results.CreatedAtRoute(GetInventoryItemEndpointName, new {id = item.Id}, item);
-//     // return Results.Created($"/inventory/{item.Id}", item);
-// });
-
-app.UseCors("AllowAll");
-
 app.UseHttpsRedirection();
 
-app.UseAuthentication();
+app.UseCors("FrontendPolicy");
 
+app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapGet("/", () => "Hello World!");
 app.MapControllers();
 
 app.Run();

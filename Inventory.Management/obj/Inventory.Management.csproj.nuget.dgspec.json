@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kamil\\.NET-First-API\\Inventory.Management\\Inventory.Management.csproj": {}
+    "c:\\Users\\kamil\\.NET-First-API\\Inventory.Management\\Inventory.Management.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kamil\\.NET-First-API\\Inventory.Management\\Inventory.Management.csproj": {
+    "c:\\Users\\kamil\\.NET-First-API\\Inventory.Management\\Inventory.Management.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kamil\\.NET-First-API\\Inventory.Management\\Inventory.Management.csproj",
+        "projectUniqueName": "c:\\Users\\kamil\\.NET-First-API\\Inventory.Management\\Inventory.Management.csproj",
         "projectName": "Inventory.Management",
-        "projectPath": "C:\\Users\\kamil\\.NET-First-API\\Inventory.Management\\Inventory.Management.csproj",
+        "projectPath": "c:\\Users\\kamil\\.NET-First-API\\Inventory.Management\\Inventory.Management.csproj",
         "packagesPath": "C:\\Users\\kamil\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kamil\\.NET-First-API\\Inventory.Management\\obj\\",
+        "outputPath": "c:\\Users\\kamil\\.NET-First-API\\Inventory.Management\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\kamil\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -44,6 +44,14 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.Cookies": {
+              "target": "Package",
+              "version": "[2.3.11, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[10.0.9, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[10.0.0, )"

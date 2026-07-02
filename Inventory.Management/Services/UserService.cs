@@ -38,6 +38,7 @@ public class UserService(AppDbContext context) : IUserService
         {
             Username = user.Username,
             Email = user.Email,
+            Password = user.Password,
             SignUpDate = user.SignUpDate
         };
         
@@ -49,6 +50,7 @@ public class UserService(AppDbContext context) : IUserService
             Id = newUser.Id,
             Username = newUser.Username,
             Email = newUser.Email,
+            Password = newUser.Password,
             SignUpDate = newUser.SignUpDate
         };
     }

@@ -8,9 +8,11 @@ namespace Inventory.Management.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
 
     public class UsersController(IUserService service) : ControllerBase
     {
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<List<UserResponse>>> GetUsers()
             => Ok(await service.GetAllUsersAsync());
@@ -28,6 +30,7 @@ namespace Inventory.Management.Controllers
             return Ok(user);
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult<UserResponse>> AddUser(CreateUserRequest user)
         {

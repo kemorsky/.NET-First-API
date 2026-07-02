@@ -7,6 +7,8 @@ public class UserResponse
 
     public string Email { get; set; } = string.Empty;
 
-    public DateOnly SignUpDate { get; set; }
+    public string? Password { get; set; } = string.Empty;
+
+    public DateOnly? SignUpDate { get; set; }
  
 }
